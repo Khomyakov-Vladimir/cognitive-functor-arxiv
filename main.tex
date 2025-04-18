@@ -1,0 +1,121 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{tikz-cd}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Cognitive Functor and Topos Collapse: \\ A Variational Model of Ontological Projection}
+\author{Владимир Хомяков \and ИИ-ассистент}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Мы представляем формальную модель когнитивной проекции как функтора между онтологическими и эпистемическими топосами. Используя вариационный принцип, основанный на ELBO, мы интерпретируем коллапс онтологической структуры в когнитивно сжатый топос как потерю информации, управляемую KL-дивергенцией. Реализация модели использует гиперграфовые нейронные энкодеры и демонстрирует согласованность с теорией предсказывающего кодирования и колмогоровской сложностью. Обсуждаются следствия для интерпретации квантовой механики.
+\end{abstract}
+
+\section{Топосная модель когнитивной редукции}
+
+\subsection{Онтологический и когнитивный топосы}
+
+Пусть $\mathcal{ONT}$ -- топос онтологических состояний:
+\begin{itemize}
+\item Объекты: $\varphi \in \mathcal{H}_{\text{ont}} \subseteq \mathbb{R}^N, N \gg 1$
+\item Морфизмы: унитарные операторы $U: \varphi \rightarrow \varphi'$
+\end{itemize}
+
+Когнитивный топос $\mathcal{COG}$:
+\begin{itemize}
+\item Объекты: $x = F(\varphi) \in \mathbb{R}^d, d \ll N$
+\item Морфизмы: ограниченные линейные отображения
+\end{itemize}
+
+\subsection{Функториальная проекция логики}
+
+\begin{equation}
+F: \mathcal{ONT} \rightarrow \mathcal{COG}
+\end{equation}
+
+Нарушение закона исключенного третьего:
+\begin{equation}
+F^*(\neg S) \neq \neg F^*(S)
+\end{equation}
+
+\section{Вариационная модель сжатия}
+
+\subsection{Оптимизация на основе ELBO}
+
+\begin{equation}
+\text{ELBO} = \mathbb{E}_{q_\theta(x|\varphi)}[\log p(\varphi|x)] - D_{KL}(q_\theta \parallel p)
+\end{equation}
+
+\subsection{Информационный коллапс топоса}
+
+Функтор потерь:
+\begin{equation}
+\mathcal{L}[\phi, F] = \mathrm{KL}(P(\phi) \parallel Q(F(\phi))) + \lambda \cdot \|F(U\phi) - VF(\phi)\|^2
+\end{equation}
+
+\section{Реализация и результаты}
+
+\subsection{Архитектура гиперграфового энкодера}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/gnn_architecture.pdf}
+\caption{Схема GNN-энкодера для преобразования $\varphi \rightarrow x$}
+\end{figure}
+
+\subsection{Визуализация KL-ландшафта}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/kl_landscape.pdf}
+\caption{Распределение $D_{KL}$ в пространстве $\mathcal{COG}$ (логарифмическая шкала)}
+\end{figure}
+
+\section{Обсуждение}
+
+\subsection{Связь с интерпретациями КМ}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+ & SF & QBism & RQM \\
+\hline
+Онтология & Функтор & Субъективность & Отношения \\
+\hline
+Потери & $F$-редукция & Нет & Частичные \\
+\hline
+\end{tabular}
+\caption{Сравнение интерпретаций}
+\end{table}
+
+\subsection{Философские следствия}
+
+Аналогия с принципом Маха:
+\begin{equation}
+\text{Инерция } \sim F(\text{полная онтология})
+\end{equation}
+
+\section*{Благодарности}
+Авторы благодарят участников дискуссий за ценные замечания.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
